@@ -6,7 +6,8 @@ This document breaks the project into explicit, testable stages. Each part is tr
 
 - Parts 1 and 2 are complete and approved.
 - Part 3 is complete: the user confirmed the Kanban board displays from the Docker app.
-- Part 4 is the next implementation phase. Do not begin it until the user asks to continue.
+- Part 4 is complete: sign-in uses the required `user` / `password` credentials and remains active for the current browser session until sign-out or session end.
+- The sign-in is an MVP-only client-side gate, not server-side authentication or a security boundary.
 - The frontend is a static Next.js export served by FastAPI from `/`.
 - Docker maps host port `8001` to container port `8000`. Use `http://localhost:8001/`; port `8000` previously returned the old placeholder page in the user's environment. The exact cause of that port-8000 response was not established.
 - Drag-and-drop targeting uses pointer intersection first with a nearest-corner fallback. A real browser check and the user confirmed moving a card between columns works and the card leaves its source column. The browser test asserts both conditions.
@@ -90,17 +91,17 @@ Success criteria:
 Goal: gate access to the board behind a simple login screen using the required dummy credentials.
 
 Checklist:
-- [ ] Add a sign-in screen that appears before the board is visible.
-- [ ] Implement the hardcoded credentials `user` / `password`.
-- [ ] Reject invalid credentials with a visible error state.
-- [ ] Add a sign-out flow that returns the user to the login view.
-- [ ] Persist the sign-in state for the current session only, consistent with the MVP requirement.
-- [ ] Add tests for successful login, failed login, and logout behavior.
+- [x] Add a sign-in screen that appears before the board is visible.
+- [x] Implement the hardcoded credentials `user` / `password`.
+- [x] Reject invalid credentials with a visible error state.
+- [x] Add a sign-out flow that returns the user to the login view.
+- [x] Persist the sign-in state for the current session only, consistent with the MVP requirement.
+- [x] Add tests for successful login, failed login, and logout behavior.
 
 Tests and validation:
-- Unit tests for the authentication state logic.
-- Browser tests covering the login flow and protected board access.
-- Validate that the board is hidden until the user logs in.
+- [x] Unit tests for authentication and login/logout behavior (9 frontend unit tests passed).
+- [x] Browser tests for invalid credentials, valid login, session persistence on reload, logout, and board interactions (4 tests passed against FastAPI serving the static export).
+- [x] Validate that the board is hidden until login; the exported page renders the login screen initially.
 
 Success criteria:
 - The board is inaccessible without valid credentials.
